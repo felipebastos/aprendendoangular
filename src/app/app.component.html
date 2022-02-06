@@ -1,6 +1,7 @@
-<div class="container">
-    <div class="jumbotron">
-        <h1>Olá, sou o {{name}}</h1>
-        <p>Sou um app Angular</p>
-    </div>
-</div>
+<h1>Testando contato com API</h1>
+<p>Pessoas do universo Star Wars</p>
+<ul class="list-group">
+    <li *ngFor="let person of people; let i=index" class="list-group-item">
+        {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
+    </li>
+</ul>
