@@ -9,7 +9,7 @@ export class PostService {
 
   constructor(private httpClient: HttpClient) { }
 
-  async getPosts() {
+  async getPosts(): Promise<Iterable<any>> {
     let people = [];
 
     let next = this.url;
@@ -17,9 +17,8 @@ export class PostService {
     while (next) {
       await this.access(next).then(
         response => {
-          let resposta = response;
-          people = [...people, ...resposta['lista']];
-          next = resposta['next'];
+          people = [...people, ...response['lista']];
+          next = response['next'];
         }
       );
     }
