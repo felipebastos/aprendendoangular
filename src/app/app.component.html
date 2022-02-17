@@ -1,7 +1,27 @@
-<h1>Testando contato com API</h1>
-<p>Pessoas do universo Star Wars</p>
-<ul class="list-group">
-    <li *ngFor="let person of people; let i=index" class="list-group-item">
-        {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
-    </li>
-</ul>
+<div class="container">
+    <h1>Testando contato com API</h1>
+    <p>Pessoas do universo Star Wars</p>
+    <button class="btn btn-primary" (click)="onPopulateButton()">Buscar personagens</button>
+    <div class="row">
+        <div class="col-xs-6">
+            <h2>Conhecidos</h2>
+            <ul class="list-group">
+                <li *ngFor="let person of (people | async).knownpeople; let i=index" class="list-group-item">
+                    {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
+
+                    <button class="btn btn-alert" (click)="onMoveToUnknown(person)">Não sei quem é</button>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-6">
+            <h2>Desconhecidos</h2>
+            <ul class="list-group">
+                <li *ngFor="let person of (people | async).unknownpeople; let i=index" class="list-group-item">
+                    {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
+
+                    <button class="btn btn-secondary" (click)="onMoveToKnown(person)">Sei quem é</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
