@@ -1,0 +1,9 @@
+<div class="row">
+    <h1>Detalhes</h1>
+    <button class="btn btn-secondary" (click)="onFecharClicked()">Fechar</button>
+    <ul class="list-group">
+        <li *ngFor="let property of selectedPerson | keyvalue" class="list-group-item">
+            {{property.key}} : {{property.value}}
+        </li>
+    </ul>
+</div>

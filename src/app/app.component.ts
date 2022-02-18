@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Person } from './app.model';
-import { PostService } from './services/post.service';
-import * as AppActions from './app.actions';
+import { PeopleService } from './services/people.service';
+import * as AppActions from './store/app.actions';
+import * as fromAppState from './store/app.reducer';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,11 @@ import * as AppActions from './app.actions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  people: Observable<{ knownpeople: Person[], unknownpeople: Person[] }>;
+  people: Observable<fromAppState.State>;
 
   constructor(
-    private service: PostService,
-    private store: Store<{ appPeople: { knownpeople: Person[], unknownpeople: Person[] } }>
+    private service: PeopleService,
+    private store: Store<{ appPeople: fromAppState.State }>
   ) { }
 
   ngOnInit() {
@@ -23,24 +24,22 @@ export class AppComponent implements OnInit {
   }
 
   async onPopulateButton() {
-    let people = await this.service.getPosts();
-
-    for (let person of people) {
-      this.store.dispatch(new AppActions.AddKnownPersonAction(
-        person
-      ));
-    }
+    await this.service.loadPeople();
   }
 
   onMoveToUnknown(person: Person) {
-    this.store.dispatch(new AppActions.MoveToUnknown(
-      person
-    ))
+    this.store.dispatch(AppActions.moveToUnknown({ payload: person }));
   }
 
   onMoveToKnown(person: Person) {
-    this.store.dispatch(new AppActions.MoveToknown(
-      person
-    ))
+    this.store.dispatch(AppActions.moveToKnown({ payload: person }));
+  }
+
+  onDetalhesClicked(person: Person) {
+    this.store.dispatch(AppActions.selectPerson({ payload: person }));
+  }
+
+  onFecharClicked() {
+    this.store.dispatch(AppActions.unselectPerson());
   }
 }

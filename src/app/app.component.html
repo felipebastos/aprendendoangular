@@ -8,8 +8,8 @@
             <ul class="list-group">
                 <li *ngFor="let person of (people | async).knownpeople; let i=index" class="list-group-item">
                     {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
-
-                    <button class="btn btn-alert" (click)="onMoveToUnknown(person)">Não sei quem é</button>
+                    <button class="btn btn-secondary" (click)="onDetalhesClicked(person)">Detalhes</button>
+                    <button class="btn btn-warning" (click)="onMoveToUnknown(person)">Não sei quem é</button>
                 </li>
             </ul>
         </div>
@@ -18,10 +18,13 @@
             <ul class="list-group">
                 <li *ngFor="let person of (people | async).unknownpeople; let i=index" class="list-group-item">
                     {{i+1}} - {{ person.name }} tem {{ person.height }}cm de altura e pesa {{ person.mass }}kg.
-
-                    <button class="btn btn-secondary" (click)="onMoveToKnown(person)">Sei quem é</button>
+                    <button class="btn btn-secondary" (click)="onDetalhesClicked(person)">Detalhes</button>
+                    <button class="btn btn-success" (click)="onMoveToKnown(person)">Sei quem é</button>
                 </li>
             </ul>
         </div>
     </div>
+    <app-detalhes *ngIf="(people | async).selectedPerson" [selectedPerson]="(people | async).selectedPerson"
+        (fecharEvent)="onFecharClicked()">
+    </app-detalhes>
 </div>

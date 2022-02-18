@@ -7,11 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { appReducer } from './app.reducer';
+import { appReducer } from './store/app.reducer';
+import { DetalhesComponent } from './detalhes/detalhes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DetalhesComponent
   ],
   imports: [
     BrowserModule,
